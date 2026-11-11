@@ -1,0 +1,598 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 11-11-2026 a las 20:46:51
+-- Versión del servidor: 11.5.2-MariaDB
+-- Versión de PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `bd_deportes`
+--
+CREATE DATABASE IF NOT EXISTS `bd_deportes` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `bd_deportes`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auth_group`
+--
+
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL,
+  `name` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auth_group_permissions`
+--
+
+CREATE TABLE `auth_group_permissions` (
+  `id` bigint(20) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auth_permission`
+--
+
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `auth_permission`
+--
+
+INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALUES
+(1, 'Can add log entry', 1, 'add_logentry'),
+(2, 'Can change log entry', 1, 'change_logentry'),
+(3, 'Can delete log entry', 1, 'delete_logentry'),
+(4, 'Can view log entry', 1, 'view_logentry'),
+(5, 'Can add permission', 3, 'add_permission'),
+(6, 'Can change permission', 3, 'change_permission'),
+(7, 'Can delete permission', 3, 'delete_permission'),
+(8, 'Can view permission', 3, 'view_permission'),
+(9, 'Can add group', 2, 'add_group'),
+(10, 'Can change group', 2, 'change_group'),
+(11, 'Can delete group', 2, 'delete_group'),
+(12, 'Can view group', 2, 'view_group'),
+(13, 'Can add user', 4, 'add_user'),
+(14, 'Can change user', 4, 'change_user'),
+(15, 'Can delete user', 4, 'delete_user'),
+(16, 'Can view user', 4, 'view_user'),
+(17, 'Can add content type', 5, 'add_contenttype'),
+(18, 'Can change content type', 5, 'change_contenttype'),
+(19, 'Can delete content type', 5, 'delete_contenttype'),
+(20, 'Can view content type', 5, 'view_contenttype'),
+(21, 'Can add session', 6, 'add_session'),
+(22, 'Can change session', 6, 'change_session'),
+(23, 'Can delete session', 6, 'delete_session'),
+(24, 'Can view session', 6, 'view_session'),
+(25, 'Can add producto', 7, 'add_producto'),
+(26, 'Can change producto', 7, 'change_producto'),
+(27, 'Can delete producto', 7, 'delete_producto'),
+(28, 'Can view producto', 7, 'view_producto');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auth_user`
+--
+
+CREATE TABLE `auth_user` (
+  `id` int(11) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(150) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auth_user_groups`
+--
+
+CREATE TABLE `auth_user_groups` (
+  `id` bigint(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auth_user_user_permissions`
+--
+
+CREATE TABLE `auth_user_user_permissions` (
+  `id` bigint(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `django_admin_log`
+--
+
+CREATE TABLE `django_admin_log` (
+  `id` int(11) NOT NULL,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext DEFAULT NULL,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint(5) UNSIGNED NOT NULL CHECK (`action_flag` >= 0),
+  `change_message` longtext NOT NULL,
+  `content_type_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `django_content_type`
+--
+
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `django_content_type`
+--
+
+INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
+(1, 'admin', 'logentry'),
+(2, 'auth', 'group'),
+(3, 'auth', 'permission'),
+(4, 'auth', 'user'),
+(5, 'contenttypes', 'contenttype'),
+(7, 'prueba3AlegriaApp', 'producto'),
+(6, 'sessions', 'session');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `django_migrations`
+--
+
+CREATE TABLE `django_migrations` (
+  `id` bigint(20) NOT NULL,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `django_migrations`
+--
+
+INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
+(1, 'contenttypes', '0001_initial', '2026-11-11 19:29:27.681021'),
+(2, 'auth', '0001_initial', '2026-11-11 19:29:28.792303'),
+(3, 'admin', '0001_initial', '2026-11-11 19:29:29.046364'),
+(4, 'admin', '0002_logentry_remove_auto_add', '2026-11-11 19:29:29.054130'),
+(5, 'admin', '0003_logentry_add_action_flag_choices', '2026-11-11 19:29:29.062795'),
+(6, 'contenttypes', '0002_remove_content_type_name', '2026-11-11 19:29:29.149241'),
+(7, 'auth', '0002_alter_permission_name_max_length', '2026-11-11 19:29:29.204310'),
+(8, 'auth', '0003_alter_user_email_max_length', '2026-11-11 19:29:29.239933'),
+(9, 'auth', '0004_alter_user_username_opts', '2026-11-11 19:29:29.247519'),
+(10, 'auth', '0005_alter_user_last_login_null', '2026-11-11 19:29:29.336872'),
+(11, 'auth', '0006_require_contenttypes_0002', '2026-11-11 19:29:29.341757'),
+(12, 'auth', '0007_alter_validators_add_error_messages', '2026-11-11 19:29:29.349348'),
+(13, 'auth', '0008_alter_user_username_max_length', '2026-11-11 19:29:29.389392'),
+(14, 'auth', '0009_alter_user_last_name_max_length', '2026-11-11 19:29:29.427564'),
+(15, 'auth', '0010_alter_group_name_max_length', '2026-11-11 19:29:29.462902'),
+(16, 'auth', '0011_update_proxy_permissions', '2026-11-11 19:29:29.471609'),
+(17, 'auth', '0012_alter_user_first_name_max_length', '2026-11-11 19:29:29.508946'),
+(18, 'prueba3AlegriaApp', '0001_initial', '2026-11-11 19:29:29.533635'),
+(19, 'sessions', '0001_initial', '2026-11-11 19:29:29.592087');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `django_session`
+--
+
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `prueba3alegriaapp_producto`
+--
+
+CREATE TABLE `prueba3alegriaapp_producto` (
+  `id` bigint(20) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `stock` int(11) NOT NULL,
+  `precio_unitario` int(11) NOT NULL,
+  `fecha_ingreso` date NOT NULL,
+  `categoria` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `auth_group`
+--
+ALTER TABLE `auth_group`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indices de la tabla `auth_group_permissions`
+--
+ALTER TABLE `auth_group_permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  ADD KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`);
+
+--
+-- Indices de la tabla `auth_permission`
+--
+ALTER TABLE `auth_permission`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`);
+
+--
+-- Indices de la tabla `auth_user`
+--
+ALTER TABLE `auth_user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indices de la tabla `auth_user_groups`
+--
+ALTER TABLE `auth_user_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
+  ADD KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`);
+
+--
+-- Indices de la tabla `auth_user_user_permissions`
+--
+ALTER TABLE `auth_user_user_permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
+  ADD KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`);
+
+--
+-- Indices de la tabla `django_admin_log`
+--
+ALTER TABLE `django_admin_log`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  ADD KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`);
+
+--
+-- Indices de la tabla `django_content_type`
+--
+ALTER TABLE `django_content_type`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`);
+
+--
+-- Indices de la tabla `django_migrations`
+--
+ALTER TABLE `django_migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `django_session`
+--
+ALTER TABLE `django_session`
+  ADD PRIMARY KEY (`session_key`),
+  ADD KEY `django_session_expire_date_a5c62663` (`expire_date`);
+
+--
+-- Indices de la tabla `prueba3alegriaapp_producto`
+--
+ALTER TABLE `prueba3alegriaapp_producto`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `auth_group`
+--
+ALTER TABLE `auth_group`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `auth_group_permissions`
+--
+ALTER TABLE `auth_group_permissions`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `auth_permission`
+--
+ALTER TABLE `auth_permission`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT de la tabla `auth_user`
+--
+ALTER TABLE `auth_user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `auth_user_groups`
+--
+ALTER TABLE `auth_user_groups`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `auth_user_user_permissions`
+--
+ALTER TABLE `auth_user_user_permissions`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `django_admin_log`
+--
+ALTER TABLE `django_admin_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `django_content_type`
+--
+ALTER TABLE `django_content_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `django_migrations`
+--
+ALTER TABLE `django_migrations`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT de la tabla `prueba3alegriaapp_producto`
+--
+ALTER TABLE `prueba3alegriaapp_producto`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `auth_group_permissions`
+--
+ALTER TABLE `auth_group_permissions`
+  ADD CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  ADD CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`);
+
+--
+-- Filtros para la tabla `auth_permission`
+--
+ALTER TABLE `auth_permission`
+  ADD CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
+
+--
+-- Filtros para la tabla `auth_user_groups`
+--
+ALTER TABLE `auth_user_groups`
+  ADD CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  ADD CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+
+--
+-- Filtros para la tabla `auth_user_user_permissions`
+--
+ALTER TABLE `auth_user_user_permissions`
+  ADD CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  ADD CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+
+--
+-- Filtros para la tabla `django_admin_log`
+--
+ALTER TABLE `django_admin_log`
+  ADD CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  ADD CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+--
+-- Base de datos: `phpmyadmin`
+--
+CREATE DATABASE IF NOT EXISTS `phpmyadmin` DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_bin;
+USE `phpmyadmin`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__bookmark`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__bookmark: #1932 - La tabla &#039;phpmyadmin.pma__bookmark&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__bookmark: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__bookmark`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__central_columns`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__central_columns: #1932 - La tabla &#039;phpmyadmin.pma__central_columns&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__central_columns: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__central_columns`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__column_info`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__column_info: #1932 - La tabla &#039;phpmyadmin.pma__column_info&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__column_info: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__column_info`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__designer_settings`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__designer_settings: #1932 - La tabla &#039;phpmyadmin.pma__designer_settings&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__designer_settings: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__designer_settings`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__export_templates`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__export_templates: #1932 - La tabla &#039;phpmyadmin.pma__export_templates&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__export_templates: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__export_templates`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__favorite`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__favorite: #1932 - La tabla &#039;phpmyadmin.pma__favorite&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__favorite: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__favorite`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__history`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__history: #1932 - La tabla &#039;phpmyadmin.pma__history&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__history: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__history`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__navigationhiding`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__navigationhiding: #1932 - La tabla &#039;phpmyadmin.pma__navigationhiding&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__navigationhiding: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__navigationhiding`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__pdf_pages`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__pdf_pages: #1932 - La tabla &#039;phpmyadmin.pma__pdf_pages&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__pdf_pages: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__pdf_pages`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__recent`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__recent: #1932 - La tabla &#039;phpmyadmin.pma__recent&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__recent: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__recent`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__relation`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__relation: #1932 - La tabla &#039;phpmyadmin.pma__relation&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__relation: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__relation`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__savedsearches`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__savedsearches: #1932 - La tabla &#039;phpmyadmin.pma__savedsearches&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__savedsearches: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__savedsearches`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__table_coords`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__table_coords: #1932 - La tabla &#039;phpmyadmin.pma__table_coords&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__table_coords: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__table_coords`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__table_info`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__table_info: #1932 - La tabla &#039;phpmyadmin.pma__table_info&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__table_info: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__table_info`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__table_uiprefs`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__table_uiprefs: #1932 - La tabla &#039;phpmyadmin.pma__table_uiprefs&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__table_uiprefs: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__table_uiprefs`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__tracking`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__tracking: #1932 - La tabla &#039;phpmyadmin.pma__tracking&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__tracking: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__tracking`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__userconfig`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__userconfig: #1932 - La tabla &#039;phpmyadmin.pma__userconfig&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__userconfig: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__userconfig`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__usergroups`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__usergroups: #1932 - La tabla &#039;phpmyadmin.pma__usergroups&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__usergroups: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__usergroups`&#039; en la línea 1
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pma__users`
+--
+-- Error leyendo la estructura de la tabla phpmyadmin.pma__users: #1932 - La tabla &#039;phpmyadmin.pma__users&#039; no existe en el motor
+-- Error leyendo datos de la tabla phpmyadmin.pma__users: #1064 - Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar cerca de &#039;FROM `phpmyadmin`.`pma__users`&#039; en la línea 1
+--
+-- Base de datos: `test`
+--
+CREATE DATABASE IF NOT EXISTS `test` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `test`;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
