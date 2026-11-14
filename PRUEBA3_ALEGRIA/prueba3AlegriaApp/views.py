@@ -33,7 +33,7 @@ def buscar_producto(request):
         'productos': productos,
         'nombre_buscado': nombre_buscado
     }
-    return render(request, 'buscar_producto.html', datos)
+    return render(request, 'buscar_productos.html', datos)
 
 @login_required
 @user_passes_test(es_administrador)
@@ -42,7 +42,7 @@ def agregar_producto(request):
         formulario = FormProd(request.POST)
         if formulario.is_valid():
             formulario.save()
-            return redirect('listar_productos')
+            return redirect('listar')
     else:
         formulario = FormProd()
     datos = {
@@ -59,15 +59,15 @@ def modificar_producto(request, id):
         formulario = FormProd(request.POST, instance=producto)
         if formulario.is_valid():
             formulario.save()
-            return redirect('listar_producto')
-        else:
-            formulario = FormProd(instance=producto)
-        datos = {
-            'titulo':'Modificar Producto',
-            'formulario':formulario,
-            'producto':producto
-        }
-        return render(request, 'modifiar_producto.html', datos)
+            return redirect('listar')
+    else:
+        formulario = FormProd(instance=producto)
+    datos = {
+        'titulo':'Modificar Producto',
+        'formulario':formulario,
+        'producto':producto
+    }
+    return render(request, 'modificar_producto.html', datos)
 
 @login_required
 @user_passes_test(es_administrador)
@@ -75,7 +75,7 @@ def eliminar_producto(request, id):
     producto = get_object_or_404(Prod, id=id)
     if request.method == 'POST':
         producto.delete()
-        return redirect('listar_productos')
+        return redirect('listar')
     datos = {
         'titulo':'Eliminar Producto',
         'producto':producto
