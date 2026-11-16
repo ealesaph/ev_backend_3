@@ -1,0 +1,33 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}{{ titulo }}{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">{{ titulo }}</h4>
+            </div>
+            <div class="card-body p-4 text-center">
+                <p class="fs-5">¿Está seguro que desea eliminar permanentemente el siguiente producto?</p>
+                <ul class="list-group mb-4 text-start">
+                    <li class="list-group-item"><strong>ID:</strong> {{ producto.id }}</li>
+                    <li class="list-group-item"><strong>Nombre:</strong> {{ producto.nombre }}</li>
+                    <li class="list-group-item"><strong>Categoría:</strong> {{ producto.categoria }}</li>
+                    <li class="list-group-item"><strong>Stock:</strong> {{ producto.stock }}</li>
+                    <li class="list-group-item"><strong>Precio Unitario:</strong> ${{ producto.precio_unitario }}</li>
+                    <li class="list-group-item"><strong>Fecha de Ingreso:</strong> {{ producto.fecha_ingreso|date:"d-m-Y" }}</li>
+                </ul>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'listar' %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

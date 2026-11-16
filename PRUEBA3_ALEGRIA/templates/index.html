@@ -1,12 +1,50 @@
-{% extends './layout/base.html ' %}
+{% extends 'layout/base.html' %}
 
-{% block titulo %}
-{{titulo}}
-{% endblock %}
-
-{% block estilos %}
-{% endblock %}
+{% block titulo %}{{ titulo }}{% endblock %}
 
 {% block contenido %}
-    <p>Soy una clase :D</p>
+<div class="text-center mb-5">
+    <h1 class="fw-bold">Sistema de Gestión de Artículos Deportivos</h1>
+    <p class="text-muted">Seleccione la operación que desea realizar en el inventario</p>
+</div>
+
+<div class="row g-4 justify-content-center">
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm text-center">
+            <div class="card-body d-flex flex-column justify-content-between p-4">
+                <div>
+                    <h5 class="card-title fw-bold">Listado de Productos</h5>
+                    <p class="card-text text-muted">Visualiza todos los artículos deportivos registrados en la base de datos.</p>
+                </div>
+                <a href="{% url 'listar' %}" class="btn btn-primary mt-3">Ir al Listado</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm text-center">
+            <div class="card-body d-flex flex-column justify-content-between p-4">
+                <div>
+                    <h5 class="card-title fw-bold">Buscar Producto</h5>
+                    <p class="card-text text-muted">Consulta productos específicos filtrando por su nombre.</p>
+                </div>
+                <a href="{% url 'buscar' %}" class="btn btn-info text-white mt-3">Ir a Buscar</a>
+            </div>
+        </div>
+    </div>
+
+    {% if user.is_staff %}
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm text-center border-success">
+            <div class="card-body d-flex flex-column justify-content-between p-4">
+                <div>
+                    <h5 class="card-title fw-bold text-success">Agregar Producto</h5>
+                    <p class="card-text text-muted">Registra un nuevo artículo deportivo en el inventario.</p>
+                </div>
+                <a href="{% url 'agregar' %}" class="btn btn-success mt-3">Agregar Nuevo</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

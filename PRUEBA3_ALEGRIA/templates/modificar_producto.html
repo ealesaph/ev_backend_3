@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}{{ titulo }}{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">{{ titulo }}: {{ producto.nombre }} (ID: {{ producto.id }})</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ formulario.as_p }}
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'listar' %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
