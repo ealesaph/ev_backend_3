@@ -27,7 +27,7 @@ def listar_productos(request):
 @login_required
 def buscar_producto(request):
     nombre_buscado = request.GET.get('nombre', '')
-    productos = Prod.objects.filter(nombre__icontains=nombre_buscado)
+    productos = Prod.objects.filter(nombre__exact=nombre_buscado)
     datos = {
         'titulo':'Buscar Producto',
         'productos': productos,

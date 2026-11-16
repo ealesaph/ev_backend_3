@@ -12,7 +12,7 @@
     <div class="card-body">
         <form method="get" action="{% url 'buscar' %}" class="row g-3">
             <div class="col-md-9">
-                <input type="text" name="nombre" value="{{ nombre_buscado }}" class="form-control" placeholder="Ingrese el nombre del producto a buscar...">
+                <input type="text" name="nombre" value="{{ nombre_buscado }}" class="form-control" placeholder="Ingrese el nombre exacto del producto que busca...">
             </div>
             <div class="col-md-3 d-grid">
                 <button type="submit" class="btn btn-primary">Buscar</button>
