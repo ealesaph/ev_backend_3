@@ -1,0 +1,18 @@
+<div class="mb-3">
+    {{ campo.label_tag }}
+    <div class="position-relative">
+        {{ campo }}
+        <div id="categorias-autocompletar" class="list-group position-absolute top-100 start-0 w-100 shadow z-3 d-none" role="listbox" aria-label="Categorías coincidentes" hidden>
+            {% for categoria in categorias %}
+            <button type="button" class="list-group-item list-group-item-action" role="option" aria-selected="false" tabindex="-1" data-categoria-sugerida="{{ categoria }}">{{ categoria }}</button>
+            {% endfor %}
+            <div class="list-group-item text-muted d-none" data-sin-coincidencias>No hay categorías coincidentes.</div>
+        </div>
+    </div>
+    {% if campo.help_text %}
+    <div class="form-text">{{ campo.help_text }}</div>
+    {% endif %}
+    {% for error in campo.errors %}
+    <div class="invalid-feedback d-block">{{ error }}</div>
+    {% endfor %}
+</div>

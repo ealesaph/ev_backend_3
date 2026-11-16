@@ -10,9 +10,15 @@
                 <h4 class="mb-0">{{ titulo }}: {{ producto.nombre }} (ID: {{ producto.id }})</h4>
             </div>
             <div class="card-body p-4">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ formulario.as_p }}
+                    {% for campo in formulario %}
+                    {% if campo.name == 'categoria' %}
+                    {% include 'partials/categoria_autocomplete.html' with campo=campo categorias=formulario.categorias_existentes %}
+                    {% else %}
+                    {{ campo.as_field_group }}
+                    {% endif %}
+                    {% endfor %}
                     <div class="d-flex justify-content-between mt-4">
                         <a href="{% url 'listar' %}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" class="btn btn-warning">Guardar Cambios</button>

@@ -1,0 +1,10 @@
+<div class="row g-2">
+    {% for widget in widget.subwidgets %}
+    <div class="col-4">
+        <label class="form-label mb-1" for="{{ widget.attrs.id }}">
+            {% if forloop.counter == 1 %}Día{% elif forloop.counter == 2 %}Mes{% else %}Año{% endif %}
+        </label>
+        {% include widget.template_name %}
+    </div>
+    {% endfor %}
+</div>

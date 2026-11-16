@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth import get_user_model
 from .models import Producto as Prod
 from .forms import FormularioProducto as FormProd
 
@@ -37,9 +38,19 @@ def buscar_producto(request):
 
 @login_required
 @user_passes_test(es_administrador)
+def listar_usuarios(request):
+    usuarios = get_user_model().objects.all().order_by('username')
+    datos = {
+        'titulo': 'Usuarios del Sistema',
+        'usuarios': usuarios
+    }
+    return render(request, 'listar_usuarios.html', datos)
+
+@login_required
+@user_passes_test(es_administrador)
 def agregar_producto(request):
     if request.method == 'POST':
-        formulario = FormProd(request.POST)
+        formulario = FormProd(request.POST, request.FILES)
         if formulario.is_valid():
             formulario.save()
             return redirect('listar')
@@ -56,7 +67,7 @@ def agregar_producto(request):
 def modificar_producto(request, id):
     producto = get_object_or_404(Prod, id=id)
     if request.method == 'POST':
-        formulario = FormProd(request.POST, instance=producto)
+        formulario = FormProd(request.POST, request.FILES, instance=producto)
         if formulario.is_valid():
             formulario.save()
             return redirect('listar')

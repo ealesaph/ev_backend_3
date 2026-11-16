@@ -64,6 +64,115 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        (function () {
+            const campoCategoria = document.getElementById('id_categoria');
+            const lista = document.getElementById('categorias-autocompletar');
+            if (!campoCategoria || !lista) {
+                return;
+            }
+
+            const opciones = Array.from(lista.querySelectorAll('[data-categoria-sugerida]'));
+            const sinCoincidencias = lista.querySelector('[data-sin-coincidencias]');
+            const normalizar = valor => valor.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+            const opcionesVisibles = () => opciones.filter(opcion => !opcion.classList.contains('d-none'));
+
+            function cerrarLista() {
+                lista.hidden = true;
+                lista.classList.add('d-none');
+                campoCategoria.setAttribute('aria-expanded', 'false');
+            }
+
+            function filtrarOpciones() {
+                const texto = normalizar(campoCategoria.value.trim());
+                let coincidencias = 0;
+
+                opciones.forEach(opcion => {
+                    const coincide = texto.length > 0 && normalizar(opcion.textContent.trim()).includes(texto);
+                    opcion.classList.toggle('d-none', !coincide);
+                    opcion.setAttribute('aria-selected', 'false');
+                    if (coincide) {
+                        coincidencias += 1;
+                    }
+                });
+
+                if (sinCoincidencias) {
+                    sinCoincidencias.classList.toggle('d-none', !texto || coincidencias > 0);
+                }
+
+                const mostrarLista = texto.length > 0;
+                lista.hidden = !mostrarLista;
+                lista.classList.toggle('d-none', !mostrarLista);
+                campoCategoria.setAttribute('aria-expanded', String(mostrarLista));
+            }
+
+            campoCategoria.addEventListener('input', filtrarOpciones);
+            campoCategoria.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    cerrarLista();
+                } else if (event.key === 'ArrowDown') {
+                    const [primeraOpcion] = opcionesVisibles();
+                    if (primeraOpcion) {
+                        event.preventDefault();
+                        primeraOpcion.focus();
+                    }
+                }
+            });
+
+            lista.addEventListener('focusin', function (event) {
+                if (!(event.target instanceof Element)) {
+                    return;
+                }
+                const activa = event.target.closest('[data-categoria-sugerida]');
+                opciones.forEach(opcion => {
+                    opcion.setAttribute('aria-selected', String(opcion === activa));
+                });
+            });
+
+            lista.addEventListener('keydown', function (event) {
+                if (!(event.target instanceof Element)) {
+                    return;
+                }
+                const activa = event.target.closest('[data-categoria-sugerida]');
+                const visibles = opcionesVisibles();
+                const indice = visibles.indexOf(activa);
+
+                if (event.key === 'Escape') {
+                    cerrarLista();
+                    campoCategoria.focus();
+                } else if (event.key === 'ArrowDown' && indice >= 0) {
+                    event.preventDefault();
+                    visibles[(indice + 1) % visibles.length].focus();
+                } else if (event.key === 'ArrowUp' && indice >= 0) {
+                    event.preventDefault();
+                    if (indice === 0) {
+                        campoCategoria.focus();
+                    } else {
+                        visibles[indice - 1].focus();
+                    }
+                }
+            });
+
+            lista.addEventListener('click', function (event) {
+                if (!(event.target instanceof Element)) {
+                    return;
+                }
+                const opcion = event.target.closest('[data-categoria-sugerida]');
+                if (!opcion) {
+                    return;
+                }
+                campoCategoria.value = opcion.dataset.categoriaSugerida;
+                cerrarLista();
+                campoCategoria.focus();
+            });
+
+            document.addEventListener('click', function (event) {
+                if (event.target instanceof Element && !campoCategoria.contains(event.target) && !lista.contains(event.target)) {
+                    cerrarLista();
+                }
+            });
+        })();
+    </script>
     {% block scripts %}{% endblock %}
 </body>
 </html>
