@@ -39,7 +39,7 @@ def buscar_producto(request):
 @user_passes_test(es_administrador)
 def agregar_producto(request):
     if request.method == 'POST':
-        formulario = FormProd(request.POST)
+        formulario = FormProd(request.POST, request.FILES)
         if formulario.is_valid():
             formulario.save()
             return redirect('listar')
@@ -56,7 +56,7 @@ def agregar_producto(request):
 def modificar_producto(request, id):
     producto = get_object_or_404(Prod, id=id)
     if request.method == 'POST':
-        formulario = FormProd(request.POST, instance=producto)
+        formulario = FormProd(request.POST, request.FILES, instance=producto)
         if formulario.is_valid():
             formulario.save()
             return redirect('listar')
